@@ -1,3 +1,4 @@
-print('hallow')
-print('kencot')
-print('hai hai')
+tinggi = int(input('Tinggi badan: '))
+berat = int(input('berat badan: '))
+BMI = berat / (tinggi * tinggi)
+print(BMI)
