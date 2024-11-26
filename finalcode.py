@@ -21,3 +21,5 @@ def save_user_data(name, username, email, password):
     
     messagebox.showinfo("Success", "Pendaftaran akun berhasil! Silakan login kembali.")
     show_login_frame()
+
+print('')
