@@ -94,6 +94,35 @@ def show_welcome_frame():
     Button(welcome_frame, text="Mulai", font=("Arial", 10), command=show_main_frame).pack(pady=10)
     
     switch_frame(welcome_frame)
+    
+# Jendela daftar (DHIAZ)
+def show_register_frame():
+    register_frame = Frame(root)
+    
+    Label(register_frame, text="Sign Up", font=("Arial", 12)).grid(row=0, column=0, columnspan=2, pady=10)
+    
+    Label(register_frame, text="Nama:", font=("Arial", 10)).grid(row=1, column=0, padx=10, pady=5, sticky="w")
+    name_entry = Entry(register_frame, font=("Arial", 10))
+    name_entry.grid(row=1, column=1, padx=10, pady=5)
+    
+    Label(register_frame, text="Username:", font=("Arial", 10)).grid(row=2, column=0, padx=10, pady=5, sticky="w")
+    username_entry = Entry(register_frame, font=("Arial", 10))
+    username_entry.grid(row=2, column=1, padx=10, pady=5)
+    
+    Label(register_frame, text="Email:", font=("Arial", 10)).grid(row=3, column=0, padx=10, pady=5, sticky="w")
+    email_entry = Entry(register_frame, font=("Arial", 10))
+    email_entry.grid(row=3, column=1, padx=10, pady=5)
+    
+    Label(register_frame, text="Password:", font=("Arial", 10)).grid(row=4, column=0, padx=10, pady=5, sticky="w")
+    password_entry = Entry(register_frame, show="*", font=("Arial", 10))
+    password_entry.grid(row=4, column=1, padx=10, pady=5)
+    
+    Button(register_frame, text="Sign Up", font=("Arial", 10), 
+           command=lambda: register_user(name_entry, username_entry, email_entry, password_entry)).grid(row=5, column=0, columnspan=2, pady=10)
+    Button(register_frame, text="Kembali", font=("Arial", 10), command=show_main_frame).grid(row=6, column=0, columnspan=2, pady=5)
+    
+    switch_frame(register_frame)
+
 
 # Jendela login (KIRANA)
 def show_login_frame():
