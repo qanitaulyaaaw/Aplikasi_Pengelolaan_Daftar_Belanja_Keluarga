@@ -488,45 +488,58 @@ class AplikasiBelanjaKeluarga:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Ambil detail daftar belanja
-        self.cursor.execute("SELECT * FROM daftar_belanja WHERE id = ?", (daftar_belanja_id,))
-        daftar = self.cursor.fetchone()
+        # Ambil detail daftar belanja dengan error handling
+        try:
+            self.cursor.execute("SELECT * FROM daftar_belanja WHERE id = ? AND user_id = ?", (daftar_belanja_id, self.current_user))
+            daftar = self.cursor.fetchone()
+            
+            if not daftar:
+                messagebox.showerror("Error", "Daftar belanja tidak ditemukan atau tidak valid")
+                self.halaman_daftar_belanja_lama()
+                return
+            
+            # Judul
+            tk.Label(self.root, text=f"Detail Daftar Belanja: {daftar[2]}", font=("Arial", 20)).pack(pady=20)
+            
+            # Informasi Daftar Belanja
+            tk.Label(self.root, text=f"Tanggal: {daftar[3]}", font=("Arial", 12)).pack()
+            
+            # Hitung total belanja
+            total_belanja = 0
+            
+            # Treeview untuk item belanja
+            columns = ('Kategori', 'Nama Barang', 'Harga')
+            tree = ttk.Treeview(self.root, columns=columns, show='headings')
+            
+            for col in columns:
+                tree.heading(col, text=col)
+                tree.column(col, width=100, anchor='center')
+            
+            tree.pack(pady=10)
+            
+            # Ambil item belanja
+            self.cursor.execute("SELECT * FROM item_belanja WHERE daftar_belanja_id = ?", (daftar_belanja_id,))
+            items = self.cursor.fetchall()
+            
+            if not items:
+                tk.Label(self.root, text="Tidak ada item belanja", font=("Arial", 12)).pack()
+            else:
+                for item in items:
+                    harga = item[4]
+                    total_belanja += harga
+                    tree.insert('', 'end', values=(item[2], item[3], f"Rp {harga:,.2f}"))
+            
+            # Tampilkan total belanja dan sisa anggaran
+            tk.Label(self.root, text=f"Anggaran Awal: Rp {daftar[4]:,.2f}", font=("Arial", 12)).pack()
+            tk.Label(self.root, text=f"Total Belanja: Rp {total_belanja:,.2f}", font=("Arial", 12)).pack()
+            tk.Label(self.root, text=f"Sisa Anggaran: Rp {daftar[4] - total_belanja:,.2f}", font=("Arial", 12)).pack()
+            
+            # Tombol Kembali
+            tk.Button(self.root, text="Kembali", command=self.halaman_daftar_belanja_lama).pack(pady=5)
         
-        # Judul
-        tk.Label(self.root, text=f"Detail Daftar Belanja: {daftar[2]}", font=("Arial", 20)).pack(pady=20)
-        
-        # Informasi Daftar Belanja
-        tk.Label(self.root, text=f"Tanggal: {daftar[3]}", font=("Arial", 12)).pack()
-        tk.Label(self.root, text=f"Anggaran: Rp {daftar[4]:,.2f}", font=("Arial", 12)).pack()
-        
-        # Treeview untuk item belanja
-        columns = ('Kategori', 'Nama Barang', 'Harga')
-        tree = ttk.Treeview(self.root, columns=columns, show='headings')
-        
-        for col in columns:
-            tree.heading(col, text=col)
-            tree.column(col, width=100)
-        
-        tree.pack(pady=10)
-        
-        # Ambil item belanja
-        self.cursor.execute("SELECT * FROM item_belanja WHERE daftar_belanja_id = ?", (daftar_belanja_id,))
-        items = self.cursor.fetchall()
-        
-        for item in items:
-            tree.insert('', 'end', values=(item[2], item[3], item[4]))
-        
-        # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.halaman_daftar_belanja_lama).pack(pady=5)
-    
-    def logout(self):
-        self.current_user = None
-        self.current_daftar_belanja_id = None
-        self.halaman_selamat_datang()
-    
-    def __del__(self):
-        # Tutup koneksi database saat objek dihapus
-        self.conn.close()
+        except Exception as e:
+            messagebox.showerror("Error", f"Terjadi kesalahan: {str(e)}")
+            self.halaman_daftar_belanja_lama()
 
 # Fungsi utama untuk menjalankan aplikasi
 def main():
