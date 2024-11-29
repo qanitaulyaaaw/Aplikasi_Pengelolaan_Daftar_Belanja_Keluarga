@@ -374,66 +374,34 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showerror("Kesalahan", "Pilih daftar belanja yang ingin dilihat")
                 return
             
-            # Gunakan tags untuk mendapatkan nama file
             file_name = list_treeview.item(selected_item[0], "tags")[0]
-            file_path = os.path.join(self.shopping_lists_dir, file_name)
+            with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
+                daftar_belanja = json.load(f)
             
-            try:
-                # Buka file dengan encoding UTF-8
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    daftar_belanja = json.load(f)
-                
-                # Tampilkan detail daftar belanja
-                detail_window = tk.Toplevel(self.root)
-                detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
-                detail_window.geometry("500x600")
-                
-                # Frame untuk informasi umum
-                info_frame = tk.Frame(detail_window)
-                info_frame.pack(pady=10, padx=10, fill='x')
-                
-                # Informasi umum
-                tk.Label(info_frame, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack(anchor='w')
-                tk.Label(info_frame, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack(anchor='w')
-                tk.Label(info_frame, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack(anchor='w')
-                tk.Label(info_frame, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack(anchor='w')
-                
-                # Treeview untuk list belanja dengan scrollbar
-                list_frame = tk.Frame(detail_window)
-                list_frame.pack(pady=10, padx=10, fill='both', expand=True)
-                
-                # Tambahkan scrollbar vertical
-                scrollbar = tk.Scrollbar(list_frame)
-                scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-                
-                list_treeview = ttk.Treeview(list_frame, columns=("Kategori", "Nama Barang", "Harga"), show="headings", yscrollcommand=scrollbar.set)
-                list_treeview.heading("Kategori", text="Kategori")
-                list_treeview.heading("Nama Barang", text="Nama Barang")
-                list_treeview.heading("Harga", text="Harga")
-                
-                # Atur lebar kolom
-                list_treeview.column("Kategori", width=100)
-                list_treeview.column("Nama Barang", width=200)
-                list_treeview.column("Harga", width=100, anchor='e')
-                
-                list_treeview.pack(side=tk.LEFT, fill='both', expand=True)
-                scrollbar.config(command=list_treeview.yview)
-                
-                # Tambahkan barang ke treeview
-                total_belanja = 0
-                for barang in daftar_belanja['list_belanja']:
-                    list_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
-                    total_belanja += barang[2]
-                
-                # Tambahkan total belanja
-                tk.Label(detail_window, text=f"Total Belanja: Rp {total_belanja:,.2f}", font=("Arial", 12, "bold")).pack(pady=5)
+            # Tampilkan detail daftar belanja
+            detail_window = tk.Toplevel(self.root)
+            detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
+            detail_window.geometry("400x500")
             
-            except FileNotFoundError:
-                messagebox.showerror("Kesalahan", f"File {file_name} tidak ditemukan")
-            except json.JSONDecodeError:
-                messagebox.showerror("Kesalahan", f"File {file_name} rusak atau tidak valid")
-            except Exception as e:
-                messagebox.showerror("Kesalahan", f"Terjadi kesalahan: {str(e)}")
+            # Informasi umum
+            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack(pady=5)
+            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
+            
+            # Treeview untuk list belanja
+            list_frame = tk.Frame(detail_window)
+            list_frame.pack(pady=10)
+            
+            list_treeview = ttk.Treeview(list_frame, columns=("Kategori", "Nama Barang", "Harga"), show="headings")
+            list_treeview.heading("Kategori", text="Kategori")
+            list_treeview.heading("Nama Barang", text="Nama Barang")
+            list_treeview.heading("Harga", text="Harga")
+            list_treeview.pack(side=tk.LEFT)
+            
+            # Tambahkan barang ke treeview
+            for barang in daftar_belanja['list_belanja']:
+                list_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
         
         def hapus_daftar():
             selected_item = list_treeview.selection()
