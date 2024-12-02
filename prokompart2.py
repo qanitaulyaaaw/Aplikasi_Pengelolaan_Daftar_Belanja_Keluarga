@@ -43,12 +43,12 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Aplikasi Pengelolaan\n Daftar Belanja Keluarga", font=("Times New Roman", 20)).pack(pady=80)
+        tk.Label(self.root, text="FAMSHOP\n Aplikasi Pengelolaan\n Daftar Belanja Keluarga", font=("Times New Roman", 20)).pack(pady=(230,10))
         
         # Tombol Login
-        tk.Button(self.root, text="Login", bg = "#badbfe", fg = "#002b58", command=self.tampilan_login, width=20, height=2).pack(pady=90)
+        tk.Button(self.root, text="Login", bg = "#badbfe", fg = "#002b58", command=self.tampilan_login, width=20, height=2).pack(pady=10)
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", bg= "#9acafd", fg = "#002b58", command=self.tampilan_daftar, width=20, height=2).pack(pady=90)
+        tk.Button(self.root, text="Daftar", bg= "#9acafd", fg = "#002b58", command=self.tampilan_daftar, width=20, height=2).pack(pady=(0,130))
     
     def tampilan_login(self):
         """Tampilan login"""
@@ -157,13 +157,13 @@ class AplikasiBelanjaKeluarga:
         tk.Label(self.root, text=f"Welcome, {self.pengguna_saat_ini}", font=("Arial", 20)).pack(pady=20)
         
         # Tombol Daftar Belanja Baru
-        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=20, height=2).pack(pady=10, anchor="center")
         
         # Tombol Daftar Belanja Lama
-        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=20, height=2).pack(pady=10, anchor="center")
         
         # Tombol Logout
-        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2).pack(pady=10, anchor="center")
     
     def tampilan_buat_daftar_belanja(self):
         """Tampilan untuk membuat daftar belanja baru"""
