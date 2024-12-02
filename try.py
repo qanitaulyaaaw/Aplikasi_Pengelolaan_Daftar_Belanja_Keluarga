@@ -379,10 +379,10 @@ class AplikasiBelanjaKeluarga:
             detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
             detail_window.geometry("400x500")
             
-            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack(pady=5)
-            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Times New Roman", 15, "bold")).pack(pady=(200,10))
+            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Times New Roman", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
             
             detail_list_frame = tk.Frame(detail_window)
             detail_list_frame.pack(pady=10)
