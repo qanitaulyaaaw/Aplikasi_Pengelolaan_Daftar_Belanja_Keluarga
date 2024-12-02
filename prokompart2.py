@@ -43,12 +43,12 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="FAMSHOP\n Aplikasi Pengelolaan\n Daftar Belanja Keluarga", font=("Times New Roman", 20)).pack(pady=(230,10))
-        
+        tk.Label(self.root, text="FAMSHOP", font=("Times New Roman", 35)).pack(pady=(230,10))
+        tk.Label(self.root, text="Aplikasi Pengelolaan\n Daftar Belanja Keluarga", font=("Times New Roman", 20)).pack(pady=(0,10))
         # Tombol Login
-        tk.Button(self.root, text="Login", bg = "#badbfe", fg = "#002b58", command=self.tampilan_login, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Login", bg = "#badbfe", fg = "#002b58", command=self.tampilan_login, width=30, height=3).pack(pady=10)
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", bg= "#9acafd", fg = "#002b58", command=self.tampilan_daftar, width=20, height=2).pack(pady=(0,130))
+        tk.Button(self.root, text="Daftar", bg= "#9acafd", fg = "#002b58", command=self.tampilan_daftar, width=30, height=3).pack(pady=(0,130))
     
     def tampilan_login(self):
         """Tampilan login"""
@@ -57,7 +57,7 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Login", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Login", font=("Times New Roman", 30)).pack(pady=20)
         
         # Username
         tk.Label(self.root, text="Username").pack()

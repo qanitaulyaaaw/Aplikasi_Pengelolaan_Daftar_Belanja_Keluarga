@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
+from PIL import Image, ImageTk
 import json
 import os
 from datetime import datetime
@@ -7,7 +8,7 @@ from datetime import datetime
 class AplikasiBelanjaKeluarga:
     def __init__(self, root):
         self.root = root
-        self.root.title("Pengelolaan Belanja Keluarga")
+        self.root.title("FAMSHOP")
         self.root.geometry("400x600")
         
         # Direktori untuk menyimpan data
@@ -20,7 +21,7 @@ class AplikasiBelanjaKeluarga:
         
         # Inisialisasi data pengguna
         self.users = self.load_users()
-        
+    
         # Tampilan awal (Selamat Datang)
         self.tampilan_selamat_datang()
     
@@ -43,14 +44,13 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Selamat Datang", font=("Arial", 20)).pack(pady=20)
-        
+        tk.Label(self.root, text="FAMSHOP", font=("Times New Roman", 35 )).pack(pady=(230,10))
+        tk.Label(self.root, text="Aplikasi Pengelolaan Daftar Belanja Keluarga", font=("Times New Roman", 15)).pack(pady=(0,10))
         # Tombol Login
-        tk.Button(self.root, text="Login", command=self.tampilan_login, width=20, height=2).pack(pady=10)
-        
+        tk.Button(self.root, text="Login", bg = "#bbdff2", fg = "#002b58", command=self.tampilan_login, width=30, height=3).pack(pady=10)
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", command=self.tampilan_daftar, width=20, height=2).pack(pady=10)
-    
+        tk.Button(self.root, text="Daftar", bg= "#96bfd5", fg = "#002b58", command=self.tampilan_daftar, width=30, height=3).pack(pady=(0,130))
+ 
     def tampilan_login(self):
         """Tampilan login"""
         # Hapus semua widget sebelumnya
@@ -58,17 +58,17 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Login", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Halaman Login", font=("Times New Roman", 30), fg = "#627783").pack(pady=(230,10))
         
         # Username
-        tk.Label(self.root, text="Username").pack()
-        username_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Username", font=("Times New Roman", 15)).pack(pady=10)
+        username_entry = tk.Entry(self.root, width=40, bg = "#d2e8fe")
         username_entry.pack(pady=5)
         
         # Password
-        tk.Label(self.root, text="Password").pack()
-        password_entry = tk.Entry(self.root, show="*", width=30)
-        password_entry.pack(pady=5)
+        tk.Label(self.root, text="Password", font= ("Times New Roman", 15)).pack(pady=10)
+        password_entry = tk.Entry(self.root, show="*", width=40, bg = "#d2e8fe")
+        password_entry.pack(pady=(0,130))
         
         def proses_login():
             username = username_entry.get()
@@ -82,10 +82,10 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showerror("Login Gagal", "Username atau password salah")
         
         # Tombol Login
-        tk.Button(self.root, text="Login", command=proses_login).pack(pady=10)
+        tk.Button(self.root, text="Login", command=proses_login, bg = "#b3f9ff", width=30, height=2).pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang, bg = "#f08080", width=30, height=2).pack(pady=(0,130))
     
     def tampilan_daftar(self):
         """Tampilan pendaftaran"""
@@ -94,27 +94,27 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Daftar Akun", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Daftar Akun", font=("Times New Roman", 30)).pack(pady=(180,30))
         
         # Nama
-        tk.Label(self.root, text="Nama Lengkap").pack()
-        nama_entry = tk.Entry(self.root, width=30)
-        nama_entry.pack(pady=5)
+        tk.Label(self.root, text="Nama Lengkap", font = ("Times New Roman", 15)).pack()
+        nama_entry = tk.Entry(self.root, width=40, bg = "#ffc5bb")
+        nama_entry.pack(pady=10)
         
         # Username
-        tk.Label(self.root, text="Username").pack()
-        username_entry = tk.Entry(self.root, width=30)
-        username_entry.pack(pady=5)
+        tk.Label(self.root, text="Username", font = ("Times New Roman", 15)).pack()
+        username_entry = tk.Entry(self.root, width=40, bg = "#ffc5bb")
+        username_entry.pack(pady=10)
         
         # Email
-        tk.Label(self.root, text="Email").pack()
-        email_entry = tk.Entry(self.root, width=30)
-        email_entry.pack(pady=5)
+        tk.Label(self.root, text="Email", font = ("Times New Roman", 15)).pack()
+        email_entry = tk.Entry(self.root, width=40, bg = "#ffc5bb")
+        email_entry.pack(pady=10)
         
         # Password
-        tk.Label(self.root, text="Password").pack()
-        password_entry = tk.Entry(self.root, show="*", width=30)
-        password_entry.pack(pady=5)
+        tk.Label(self.root, text="Password", font = ("Times New Roman", 15)).pack()
+        password_entry = tk.Entry(self.root, show="*", width=40, bg = "#ffc5bb")
+        password_entry.pack(pady=10)
         
         def proses_daftar():
             nama = nama_entry.get()
@@ -124,11 +124,11 @@ class AplikasiBelanjaKeluarga:
             
             # Validasi input
             if not (nama and username and email and password):
-                messagebox.showerror("Kesalahan", "Semua field harus diisi")
+                messagebox.showerror("Kesalahan", "Semua kolom harus diisi!")
                 return
             
             if username in self.users:
-                messagebox.showerror("Kesalahan", "Username sudah ada")
+                messagebox.showerror("Kesalahan", "Username sudah ada!")
                 return
             
             # Simpan data pengguna
@@ -139,14 +139,14 @@ class AplikasiBelanjaKeluarga:
             }
             self.save_users()
             
-            messagebox.showinfo("Berhasil", "Akun berhasil dibuat")
+            messagebox.showinfo("Berhasil", "Akun berhasil dibuat! Silakan login kembali.")
             self.tampilan_login()
         
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", command=proses_daftar).pack(pady=10)
+        tk.Button(self.root, text="Daftar", command=proses_daftar, width=20, height= 2, bg = "#b3f9ff").pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang,  width=20, height= 2, bg = "#f08080").pack(pady=5)
     
     def tampilan_menu_utama(self):
         """Tampilan menu utama setelah login"""
@@ -155,16 +155,17 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text=f"Selamat Datang, {self.pengguna_saat_ini}", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text=f"Welcome, {self.pengguna_saat_ini}!", font=("Times New Roman", 30)).pack(pady=(260,10))
+        tk.Label(self.root, text="Ingin membuat daftar belanja apa?", font=("Times New Roman", 10)).pack(pady=(0,10))
         
         # Tombol Daftar Belanja Baru
-        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=40, height=3, bg = "#dfb0d4").pack(pady=10)
         
         # Tombol Daftar Belanja Lama
-        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=40, height=3, bg = "#76c5de").pack(pady=10)
         
         # Tombol Logout
-        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2).pack(pady=10)
+        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2, bg = "#de6262").pack(pady=10)
     
     def tampilan_buat_daftar_belanja(self):
         """Tampilan untuk membuat daftar belanja baru"""
@@ -173,22 +174,22 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Buat Daftar Belanja Baru", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Daftar Belanja Baru", font=("Times New Roman", 30)).pack(pady=(260,30))
         
         # Set Anggaran
-        tk.Label(self.root, text="Total Anggaran").pack()
-        anggaran_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Total Anggaran", font = ("Times New Roman", 15)).pack()
+        anggaran_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
         anggaran_entry.pack(pady=5)
         
         # Judul Belanja
-        tk.Label(self.root, text="Judul Belanja").pack()
-        judul_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Judul Belanja", font = ("Times New Roman", 15)).pack()
+        judul_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
         judul_entry.pack(pady=5)
         
         # Tanggal Belanja
-        tk.Label(self.root, text="Tanggal Belanja").pack()
-        tanggal_entry = tk.Entry(self.root, width=30)
-        tanggal_entry.insert(0, datetime.now().strftime("%Y-%m-%d"))
+        tk.Label(self.root, text="Tanggal Belanja", font = ("Times New Roman", 15)).pack()
+        tanggal_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
+        tanggal_entry.insert(0, datetime.now().strftime("%d-%m-%Y"))
         tanggal_entry.pack(pady=5)
         
         def lanjut_input_barang():
@@ -198,18 +199,18 @@ class AplikasiBelanjaKeluarga:
                 tanggal = tanggal_entry.get()
                 
                 if not judul:
-                    messagebox.showerror("Kesalahan", "Judul belanja harus diisi")
+                    messagebox.showerror("Kesalahan", "Judul belanja harus diisi!")
                     return
                 
                 self.tampilan_input_barang(anggaran, judul, tanggal)
             except ValueError:
-                messagebox.showerror("Kesalahan", "Anggaran harus berupa angka")
+                messagebox.showerror("Kesalahan", "Anggaran harus berupa angka!")
         
         # Tombol Lanjut
-        tk.Button(self.root, text="Lanjut", command=lanjut_input_barang).pack(pady=10)
+        tk.Button(self.root, text="Lanjut", command=lanjut_input_barang, width= 15, bg = "#ffc5bb").pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, bg = "#de6262").pack(pady=5)
     
     def tampilan_input_barang(self, anggaran, judul, tanggal):
         """Tampilan untuk menginput barang belanja"""
@@ -218,11 +219,11 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Input Barang Belanja", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Daftar Barang Belanja", font=("Times New Roman", 30, "bold")).pack(pady=10)
         
         # Sisa Anggaran
         sisa_anggaran = anggaran
-        sisa_label = tk.Label(self.root, text=f"Sisa Anggaran: Rp {sisa_anggaran:,.2f}")
+        sisa_label = tk.Label(self.root, text=f"Sisa Anggaran: Rp {sisa_anggaran:,.2f}", font=("Times New Roman", 10))
         sisa_label.pack(pady=5)
         
         # List Belanja
@@ -237,18 +238,18 @@ class AplikasiBelanjaKeluarga:
         list_treeview.pack(side=tk.LEFT)
         
         # Kategori
-        tk.Label(self.root, text="Kategori Barang").pack()
-        kategori_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Kategori Barang", font = ("Times New Roman", 10)).pack(pady=5)
+        kategori_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
         kategori_entry.pack(pady=5)
         
         # Nama Barang
-        tk.Label(self.root, text="Nama Barang").pack()
-        nama_barang_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Nama Barang", font=("Times New Roman", 10)).pack(pady=5)
+        nama_barang_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
         nama_barang_entry.pack(pady=5)
         
         # Harga Barang
-        tk.Label(self.root, text="Harga Barang").pack()
-        harga_barang_entry = tk.Entry(self.root, width=30)
+        tk.Label(self.root, text="Harga Barang", font=("Times New Roman", 10)).pack()
+        harga_barang_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
         harga_barang_entry.pack(pady=5)
         
         def tambah_barang():
@@ -323,26 +324,26 @@ class AplikasiBelanjaKeluarga:
             self.tampilan_menu_utama()
         
         # Tombol Tambah Barang
-        tk.Button(self.root, text="Tambah Barang", command=tambah_barang).pack(pady=5)
+        tk.Button(self.root, text="Tambah Barang", command=tambah_barang, width= 20, height= 2, bg = "#ffdad0").pack(pady=5)
         
         # Tombol Hapus Barang
-        tk.Button(self.root, text="Hapus Barang", command=hapus_barang).pack(pady=5)
+        tk.Button(self.root, text="Hapus Barang", command=hapus_barang, width= 20, height= 2, bg = "#f7c7bb").pack(pady=5)
         
         # Tombol Cek Status
-        tk.Button(self.root, text="Cek Status Anggaran", command=cek_status).pack(pady=5)
+        tk.Button(self.root, text="Cek Anggaran", command=cek_status, width= 20, height= 2, bg = "#e5b0a3").pack(pady=5)
         
         # Tombol Simpan
-        tk.Button(self.root, text="Simpan", command=simpan_daftar).pack(pady=5)
+        tk.Button(self.root, text="Simpan", command=simpan_daftar, width= 20, height= 2, bg = "#d7a193").pack(pady=5)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=5)
     
     def tampilan_daftar_belanja_lama(self):
         for widget in self.root.winfo_children():
              widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Daftar Belanja Lama", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Daftar Belanja Lama", font=("Times New Roman", 30)).pack(pady=(230,10))
         
         # Frame untuk daftar belanja
         list_frame = tk.Frame(self.root)
@@ -411,13 +412,13 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showinfo("Berhasil", "Daftar belanja berhasil dihapus")
         
         # Tombol Lihat Detail
-        tk.Button(self.root, text="Lihat Detail", command=lihat_detail).pack(pady=5)
+        tk.Button(self.root, text="Lihat Detail", command=lihat_detail, width = 20, height= 2, bg = "#b5e0f7").pack(pady=5)
         
         # Tombol Hapus Daftar
-        tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar).pack(pady=5)
+        tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar, width= 20, height= 2, bg = "#91bad0").pack(pady=5)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=5)
 
         
 def main():
