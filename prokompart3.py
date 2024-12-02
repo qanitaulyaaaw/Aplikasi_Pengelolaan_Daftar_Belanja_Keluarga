@@ -8,7 +8,7 @@ class AplikasiBelanjaKeluarga:
     def __init__(self, root):
         self.root = root
         self.root.title("Pengelolaan Belanja Keluarga")
-        self.root.geometry("400x500")
+        self.root.geometry("400x600")
         
         # Direktori untuk menyimpan data
         self.users_file = "users.json"
@@ -43,12 +43,13 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Aplikasi Pengelolaan\n Daftar Belanja Keluarga", font=("Times New Roman", 20)).pack(pady=80)
+        tk.Label(self.root, text="Selamat Datang", font=("Arial", 20)).pack(pady=20)
         
         # Tombol Login
-        tk.Button(self.root, text="Login", bg = "#badbfe", fg = "#002b58", command=self.tampilan_login, width=20, height=2).pack(pady=90)
+        tk.Button(self.root, text="Login", command=self.tampilan_login, width=20, height=2).pack(pady=10)
+        
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", bg= "#9acafd", fg = "#002b58", command=self.tampilan_daftar, width=20, height=2).pack(pady=90)
+        tk.Button(self.root, text="Daftar", command=self.tampilan_daftar, width=20, height=2).pack(pady=10)
     
     def tampilan_login(self):
         """Tampilan login"""
@@ -61,12 +62,12 @@ class AplikasiBelanjaKeluarga:
         
         # Username
         tk.Label(self.root, text="Username").pack()
-        username_entry = tk.Entry(self.root, width=30, bg = "#d2e8fe")
+        username_entry = tk.Entry(self.root, width=30)
         username_entry.pack(pady=5)
         
         # Password
         tk.Label(self.root, text="Password").pack()
-        password_entry = tk.Entry(self.root, show="*", width=30, bg = "#d2e8fe")
+        password_entry = tk.Entry(self.root, show="*", width=30)
         password_entry.pack(pady=5)
         
         def proses_login():
@@ -81,10 +82,10 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showerror("Login Gagal", "Username atau password salah")
         
         # Tombol Login
-        tk.Button(self.root, text="Login", bg = "#b3f9ff", command=proses_login).pack(pady=10)
+        tk.Button(self.root, text="Login", command=proses_login).pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", bg = "#f08080", command=self.tampilan_selamat_datang).pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang).pack(pady=5)
     
     def tampilan_daftar(self):
         """Tampilan pendaftaran"""
@@ -93,7 +94,7 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Daftar Akun", bg = "#d2e8fe", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Daftar Akun", font=("Arial", 20)).pack(pady=20)
         
         # Nama
         tk.Label(self.root, text="Nama Lengkap").pack()
@@ -154,7 +155,7 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text=f"Welcome, {self.pengguna_saat_ini}", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text=f"Selamat Datang, {self.pengguna_saat_ini}", font=("Arial", 20)).pack(pady=20)
         
         # Tombol Daftar Belanja Baru
         tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=20, height=2).pack(pady=10)
@@ -187,7 +188,7 @@ class AplikasiBelanjaKeluarga:
         # Tanggal Belanja
         tk.Label(self.root, text="Tanggal Belanja").pack()
         tanggal_entry = tk.Entry(self.root, width=30)
-        tanggal_entry.insert(0, datetime.now().strftime("%d-%m-%Y"))
+        tanggal_entry.insert(0, datetime.now().strftime("%Y-%m-%d"))
         tanggal_entry.pack(pady=5)
         
         def lanjut_input_barang():
@@ -217,7 +218,7 @@ class AplikasiBelanjaKeluarga:
             widget.destroy()
         
         # Judul
-        tk.Label(self.root, text="Daftar Barang Belanja", font=("Arial", 20)).pack(pady=20)
+        tk.Label(self.root, text="Input Barang Belanja", font=("Arial", 20)).pack(pady=20)
         
         # Sisa Anggaran
         sisa_anggaran = anggaran
@@ -372,60 +373,68 @@ class AplikasiBelanjaKeluarga:
             if not selected_item:
                 messagebox.showerror("Kesalahan", "Pilih daftar belanja yang ingin dilihat")
                 return
-            
+    
             file_name = list_treeview.item(selected_item[0], "tags")[0]
-            with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
-                daftar_belanja = json.load(f)
-            
-            # Tampilkan detail daftar belanja
-            detail_window = tk.Toplevel(self.root)
-            detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
-            detail_window.geometry("400x500")
-            
-            # Informasi umum
-            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack(pady=5)
-            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
-            
-            # Treeview untuk list belanja
-            list_frame = tk.Frame(detail_window)
-            list_frame.pack(pady=10)
-            
-            list_treeview = ttk.Treeview(list_frame, columns=("Kategori", "Nama Barang", "Harga"), show="headings")
-            list_treeview.heading("Kategori", text="Kategori")
-            list_treeview.heading("Nama Barang", text="Nama Barang")
-            list_treeview.heading("Harga", text="Harga")
-            list_treeview.pack(side=tk.LEFT)
-            
-            # Tambahkan barang ke treeview
-            for barang in daftar_belanja['list_belanja']:
-                list_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
+            try:
+                with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
+                    daftar_belanja = json.load(f)
         
-        def hapus_daftar():
-            selected_item = list_treeview.selection()
-            if not selected_item:
-                messagebox.showerror("Kesalahan", "Pilih daftar belanja yang akan dihapus")
-                return
-            
-            file_name = list_treeview.item(selected_item[0], "tags")[0]
-            file_path = os.path.join(self.shopping_lists_dir, file_name)
-            
-            # Konfirmasi penghapusan
-            konfirmasi = messagebox.askyesno("Konfirmasi", "Apakah Anda yakin ingin menghapus daftar belanja ini?")
-            if konfirmasi:
-                os.remove(file_path)
-                list_treeview.delete(selected_item[0])
-                messagebox.showinfo("Berhasil", "Daftar belanja berhasil dihapus")
+        # Tampilkan detail daftar belanja
+                detail_window = tk.Toplevel(self.root)
+                detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
+                detail_window.geometry("500x600")
         
-        # Tombol Lihat Detail
-        tk.Button(self.root, text="Lihat Detail", command=lihat_detail).pack(pady=5)
+        # Frame untuk informasi umum
+                info_frame = tk.Frame(detail_window)
+                info_frame.pack(pady=10)
         
-        # Tombol Hapus Daftar
-        tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar).pack(pady=5)
+        # Informasi umum
+                tk.Label(info_frame, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack()
+                tk.Label(info_frame, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack()
+                tk.Label(info_frame, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack()
+                tk.Label(info_frame, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack()
         
-        # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
+        # Frame untuk list belanja
+                list_frame = tk.Frame(detail_window)
+                list_frame.pack(pady=10, expand=True, fill=tk.BOTH)
+        
+        # Scrollbar untuk treeview
+                scrollbar = tk.Scrollbar(list_frame)
+                scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # Treeview untuk list belanja
+                list_treeview = ttk.Treeview(list_frame, columns=("Kategori", "Nama Barang", "Harga"), 
+                                     show="headings", yscrollcommand=scrollbar.set)
+                list_treeview.heading("Kategori", text="Kategori")
+                list_treeview.heading("Nama Barang", text="Nama Barang")
+                list_treeview.heading("Harga", text="Harga")
+        
+        # Atur lebar kolom
+                list_treeview.column("Kategori", width=100)
+                list_treeview.column("Nama Barang", width=200)
+                list_treeview.column("Harga", width=100, anchor='e')
+        
+                list_treeview.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
+                scrollbar.config(command=list_treeview.yview)
+        
+        # Tambahkan barang ke treeview
+                total_belanja = 0
+                for barang in daftar_belanja['list_belanja']:
+                    list_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
+                    total_belanja += barang[2]
+        
+        # Total belanja
+                tk.Label(detail_window, text=f"Total Belanja: Rp {total_belanja:,.2f}", font=("Arial", 12, "bold")).pack(pady=5)
+        
+        # Tombol Tutup
+                tk.Button(detail_window, text="Tutup", command=detail_window.destroy).pack(pady=5)
+    
+            except FileNotFoundError:
+                messagebox.showerror("Kesalahan", "File daftar belanja tidak ditemukan")
+            except json.JSONDecodeError:
+                messagebox.showerror("Kesalahan", "Format file daftar belanja rusak")
+            except Exception as e:
+                messagebox.showerror("Kesalahan", f"Terjadi kesalahan: {str(e)}")
 
 def main():
     root = tk.Tk()
