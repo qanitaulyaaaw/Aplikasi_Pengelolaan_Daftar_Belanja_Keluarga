@@ -9,7 +9,7 @@ class AplikasiBelanjaKeluarga:
     def __init__(self, root):
         self.root = root
         self.root.title("FAMSHOP")
-        self.root.geometry("400x600")
+        self.root.geometry("1960x1080")
         
         # Direktori untuk menyimpan data
         self.users_file = "users.json"
@@ -21,7 +21,21 @@ class AplikasiBelanjaKeluarga:
         
         # Inisialisasi data pengguna
         self.users = self.load_users()
-    
+
+        # Tambahkan Canvas untuk background
+        self.canvas = tk.Canvas(self.root, width=400, height=600)
+        self.canvas.pack(fill="both", expand=True)
+
+        # Muat gambar background
+        self.background_image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background.jpg")
+        self.background_image = self.background_image.resize((1960, 1080), Image.LANCZOS)
+        self.bg_image = ImageTk.PhotoImage(self.background_image)
+        self.canvas.create_image(0, 0, image=self.bg_image, anchor="nw")
+        
+        # Widget tetap ditambahkan setelah canvas
+        self.frame = tk.Frame(self.root, bg="#ffffff", bd=0)
+        self.frame.place(relwidth=1, relheight=1)
+        
         # Tampilan awal (Selamat Datang)
         self.tampilan_selamat_datang()
     
@@ -43,13 +57,28 @@ class AplikasiBelanjaKeluarga:
         for widget in self.root.winfo_children():
             widget.destroy()
         
+        # Load gambar JPG
+        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background welcome.jpg")  # Ganti "background.jpg" dengan path gambar Anda
+        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
+        bg_image = ImageTk.PhotoImage(image)
+        
+        # Label untuk background
+        bg_label = tk.Label(self.root, image=bg_image)
+        bg_label.image = bg_image  # Simpan referensi gambar agar tidak dikumpulkan oleh garbage collector
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        
+        # Buat frame utama di atas background
+        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
+        frame.place(relx=0.5, rely=0.5, anchor="center")
+    
         # Judul
         tk.Label(self.root, text="FAMSHOP", font=("Times New Roman", 35 )).pack(pady=(230,10))
         tk.Label(self.root, text="Aplikasi Pengelolaan Daftar Belanja Keluarga", font=("Times New Roman", 15)).pack(pady=(0,10))
         # Tombol Login
         tk.Button(self.root, text="Login", bg = "#bbdff2", fg = "#002b58", command=self.tampilan_login, width=30, height=3).pack(pady=10)
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", bg= "#96bfd5", fg = "#002b58", command=self.tampilan_daftar, width=30, height=3).pack(pady=(0,130))
+        tk.Label(self.root, text="Belum punya akun?", font=("Times New Roman", 10)).pack(pady=10)
+        tk.Button(self.root, text="Daftar", bg= "#96bfd5", fg = "#002b58", command=self.tampilan_daftar, width=30, height=3).pack(pady=(5,130))
  
     def tampilan_login(self):
         """Tampilan login"""
