@@ -488,12 +488,7 @@ class AplikasiBelanjaKeluarga:
             
             for barang in daftar_belanja['list_belanja']:
                 detail_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
-            
-            # tombol "Kembali"
-            
-            kembali_button = tk.Button(detail_window, text="Kembali", command=detail_window.destroy)
-            kembali_button.pack(pady=10)
-    
+        
         def hapus_daftar():
             selected_item = list_treeview.selection()
             if not selected_item:
