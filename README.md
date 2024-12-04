@@ -11,4 +11,4 @@ Aplikasi pengelolaan daftar belanja ini dirancang untuk memberikan kemudahan kep
 Fitur-fitur program ini adalah menambah item belanja, menghapus item belanja yang tidak diperlukan, mengedit detail barang dengan mudah, mengecek sisa anggaran yang dimiliki, dan pencatatan riwayat belanja bulan-bulan sebelumnya.
 
 # Diagram Alir
-![tubes prokom 1](https://github.com/user-attachments/assets/3eb48070-0d9b-4cd3-8d51-51fb3ca5c67f) 
+![Uploading Aplikasi Pengelolaan Belanja Keluarga Fix.drawio.png…]()
