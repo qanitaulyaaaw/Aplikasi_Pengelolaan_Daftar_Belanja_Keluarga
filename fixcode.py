@@ -454,23 +454,12 @@ class AplikasiBelanjaKeluarga:
             with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
                 daftar_belanja = json.load(f)
             
+            for widget in self.root.winfo_children():
+                widget.destroy()
+            
             detail_window = tk.Toplevel(self.root)
             detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
             detail_window.geometry("1960x1080")
-            
-            # Load gambar JPG
-            image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background detail.jpg")
-            image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-            bg_image = ImageTk.PhotoImage(image)
-        
-            # Label untuk background
-            bg_label = tk.Label(self.root, image=bg_image)
-            bg_label.image = bg_image  
-            bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-            # Buat frame utama di atas background
-            frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-            frame.place(relx=0.5, rely=0.5, anchor="center")
             
             tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Times New Roman", 15, "bold")).pack(pady=(200,10))
             tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Times New Roman", 12)).pack(pady=5)
