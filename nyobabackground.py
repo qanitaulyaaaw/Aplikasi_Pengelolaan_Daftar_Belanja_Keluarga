@@ -5,7 +5,7 @@ import os
 # Membuat jendela utama
 root = tk.Tk()
 root.title("Background dari Gambar")
-root.geometry("400x500")
+root.geometry("1960x1080")
 
 # Membuka gambar dari file
 background_image = Image.open(r"C:\Users\Lenovo\Desktop\latihan vscode\background.jpg")
