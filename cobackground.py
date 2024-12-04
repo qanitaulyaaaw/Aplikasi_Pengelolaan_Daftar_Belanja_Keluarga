@@ -513,7 +513,6 @@ class AplikasiBelanjaKeluarga:
         # Tombol Kembali
         tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(90,10), padx=(50,1300))
 
-        
 def main():
     root = tk.Tk()
     app = AplikasiBelanjaKeluarga(root)
