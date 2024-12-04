@@ -449,50 +449,55 @@ class AplikasiBelanjaKeluarga:
             if not selected_item:
                 messagebox.showerror("Kesalahan", "Pilih daftar belanja yang ingin dilihat")
                 return
-            
+    
             file_name = list_treeview.item(selected_item[0], "tags")[0]
             with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
                 daftar_belanja = json.load(f)
-            
-            detail_window = tk.Toplevel(self.root)
-            detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
-            detail_window.geometry("1960x1080")
-            
-            # Load gambar JPG
+    
+    # Tutup jendela utama sebelum membuka detail
+            for widget in self.root.winfo_children():
+                widget.destroy()
+    
+    # Jendela detail
+            detail_window = tk.Frame(self.root)
+            detail_window.pack(fill="both", expand=True)
+    
+    # Load gambar JPG untuk background
             image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background detail.jpg")
             image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
             bg_image = ImageTk.PhotoImage(image)
-        
-            # Label untuk background
-            bg_label = tk.Label(self.root, image=bg_image)
+    
+    # Label untuk background
+            bg_label = tk.Label(detail_window, image=bg_image)
             bg_label.image = bg_image  
             bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-            # Buat frame utama di atas background
-            frame = tk.Frame(self.root, bg="#ffffff", bd=2)
+    
+    # Frame utama
+            frame = tk.Frame(detail_window, bg="#ffffff", bd=2)
             frame.place(relx=0.5, rely=0.5, anchor="center")
-            
-            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Times New Roman", 15, "bold")).pack(pady=(200,10))
-            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Times New Roman", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
-            
-            detail_list_frame = tk.Frame(detail_window)
+    
+            tk.Label(frame, text=f"Judul: {daftar_belanja['judul']}", font=("Times New Roman", 15, "bold")).pack(pady=(20, 10))
+            tk.Label(frame, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Times New Roman", 12)).pack(pady=5)
+            tk.Label(frame, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
+            tk.Label(frame, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
+    
+    # Frame untuk daftar barang
+            detail_list_frame = tk.Frame(frame)
             detail_list_frame.pack(pady=10)
-            
+    
             detail_treeview = ttk.Treeview(detail_list_frame, columns=("Kategori", "Nama Barang", "Harga"), show="headings")
             detail_treeview.heading("Kategori", text="Kategori")
             detail_treeview.heading("Nama Barang", text="Nama Barang")
             detail_treeview.heading("Harga", text="Harga")
             detail_treeview.pack(side=tk.LEFT)
-            
+    
             for barang in daftar_belanja['list_belanja']:
                 detail_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
-            
-            # tombol "Kembali"
-            
-            kembali_button = tk.Button(detail_window, text="Kembali", command=detail_window.destroy)
+    
+    # Tombol "Kembali"
+            kembali_button = tk.Button(detail_window, text="Kembali", command=self.tampilan_daftar_belanja_lama)
             kembali_button.pack(pady=10)
+
     
         def hapus_daftar():
             selected_item = list_treeview.selection()
