@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
-from PIL import Image, ImageTk
 import json
 import os
 from datetime import datetime
@@ -8,8 +7,8 @@ from datetime import datetime
 class AplikasiBelanjaKeluarga:
     def __init__(self, root):
         self.root = root
-        self.root.title("PlanIt")
-        self.root.geometry("1960x1080")
+        self.root.title("Pengelolaan Belanja Keluarga")
+        self.root.geometry("400x600")
         
         # Direktori untuk menyimpan data
         self.users_file = "users.json"
@@ -21,7 +20,7 @@ class AplikasiBelanjaKeluarga:
         
         # Inisialisasi data pengguna
         self.users = self.load_users()
-
+        
         # Tampilan awal (Selamat Datang)
         self.tampilan_selamat_datang()
     
@@ -43,52 +42,33 @@ class AplikasiBelanjaKeluarga:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background welcome.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
+        # Judul
+        tk.Label(self.root, text="Selamat Datang", font=("Arial", 20)).pack(pady=20)
         
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
-    
         # Tombol Login
-        tk.Button(self.root, text="Login", font = ("Times New Roman", 15), bg = "#006989", fg = "#f3f7ec", command=self.tampilan_login, width=20, height=2).pack(pady=(400,10))
+        tk.Button(self.root, text="Login", command=self.tampilan_login, width=20, height=2).pack(pady=10)
+        
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", font = ("Times New Roman", 15), bg = "#006989", fg = "#f3f7ec", command=self.tampilan_daftar, width=20, height=2).pack(pady=(50,130))
- 
+        tk.Button(self.root, text="Daftar", command=self.tampilan_daftar, width=20, height=2).pack(pady=10)
+    
     def tampilan_login(self):
         """Tampilan login"""
         # Hapus semua widget sebelumnya
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background login.jpg")  # Ganti "background.jpg" dengan path gambar Anda
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
-        
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Judul
+        tk.Label(self.root, text="Login", font=("Arial", 20)).pack(pady=20)
         
         # Username
-        username_entry = tk.Entry(self.root, width=40, bg = "#d2e8fe")
-        username_entry.pack(pady=(350,30))
+        tk.Label(self.root, text="Username").pack()
+        username_entry = tk.Entry(self.root, width=30)
+        username_entry.pack(pady=5)
         
         # Password
-        password_entry = tk.Entry(self.root, show="*", width=40, bg = "#d2e8fe")
-        password_entry.pack(pady=(30,130))
+        tk.Label(self.root, text="Password").pack()
+        password_entry = tk.Entry(self.root, show="*", width=30)
+        password_entry.pack(pady=5)
         
         def proses_login():
             username = username_entry.get()
@@ -102,10 +82,10 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showerror("Login Gagal", "Username atau password salah")
         
         # Tombol Login
-        tk.Button(self.root, text="Login", command=proses_login, bg = "#b3f9ff", width=30, height=2).pack(pady=(5,1))
+        tk.Button(self.root, text="Login", command=proses_login).pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang, bg = "#f08080", width=20, height=2).pack(pady=(100,10), padx=(50,1300))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang).pack(pady=5)
     
     def tampilan_daftar(self):
         """Tampilan pendaftaran"""
@@ -113,49 +93,42 @@ class AplikasiBelanjaKeluarga:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background daftar.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
-        
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Judul
+        tk.Label(self.root, text="Daftar Akun", font=("Arial", 20)).pack(pady=20)
         
         # Nama
-        nama_entry = tk.Entry(self.root, width=50, bg = "#ffc5bb")
-        nama_entry.pack(pady=(295,10))
+        tk.Label(self.root, text="Nama Lengkap").pack()
+        nama_entry = tk.Entry(self.root, width=30)
+        nama_entry.pack(pady=5)
         
         # Username
-        username_entry = tk.Entry(self.root, width=50, bg = "#ffc5bb")
-        username_entry.pack(pady=(35,10))
+        tk.Label(self.root, text="Username").pack()
+        username_entry = tk.Entry(self.root, width=30)
+        username_entry.pack(pady=5)
         
         # Email
-        email_entry = tk.Entry(self.root, width=50, bg = "#ffc5bb")
-        email_entry.pack(pady=(40,15))
+        tk.Label(self.root, text="Email").pack()
+        email_entry = tk.Entry(self.root, width=30)
+        email_entry.pack(pady=5)
         
         # Password
-        password_entry = tk.Entry(self.root, show="*", width=50, bg = "#ffc5bb")
-        password_entry.pack(pady=(35,15))
+        tk.Label(self.root, text="Password").pack()
+        password_entry = tk.Entry(self.root, show="*", width=30)
+        password_entry.pack(pady=5)
         
         def proses_daftar():
             nama = nama_entry.get()
-            username = username_entry.get()
+            username = username_entry.get() 
             email = email_entry.get()
             password = password_entry.get()
             
             # Validasi input
             if not (nama and username and email and password):
-                messagebox.showerror("Kesalahan", "Semua kolom harus diisi!")
+                messagebox.showerror("Kesalahan", "Semua field harus diisi")
                 return
             
             if username in self.users:
-                messagebox.showerror("Kesalahan", "Username sudah ada!")
+                messagebox.showerror("Kesalahan", "Username sudah ada")
                 return
             
             # Simpan data pengguna
@@ -166,79 +139,57 @@ class AplikasiBelanjaKeluarga:
             }
             self.save_users()
             
-            messagebox.showinfo("Berhasil", "Akun berhasil dibuat! Silakan login kembali.")
+            messagebox.showinfo("Berhasil", "Akun berhasil dibuat")
             self.tampilan_login()
         
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", command=proses_daftar, width=20, height= 2, bg = "#b3f9ff").pack(pady=10)
+        tk.Button(self.root, text="Daftar", command=proses_daftar).pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang,  width=20, height= 2, bg = "#f08080").pack(pady=(125,10), padx=(50,1300))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang).pack(pady=5)
     
     def tampilan_menu_utama(self):
         """Tampilan menu utama setelah login"""
         # Hapus semua widget sebelumnya
         for widget in self.root.winfo_children():
             widget.destroy()
-            
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background lama baru.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
-        
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image 
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
         
         # Judul
-        tk.Label(self.root, text=f"Welcome, {self.pengguna_saat_ini}!", font=("Times New Roman", 30)).pack(pady=(260,10))
+        tk.Label(self.root, text=f"Selamat Datang, {self.pengguna_saat_ini}", font=("Arial", 20)).pack(pady=20)
         
         # Tombol Daftar Belanja Baru
-        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=40, height=3, bg = "#dfb0d4").pack(pady=(45,10))
+        tk.Button(self.root, text="Daftar Belanja Baru", command=self.tampilan_buat_daftar_belanja, width=20, height=2).pack(pady=10)
         
         # Tombol Daftar Belanja Lama
-        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=40, height=3, bg = "#76c5de").pack(pady=10)
+        tk.Button(self.root, text="Daftar Belanja Lama", command=self.tampilan_daftar_belanja_lama, width=20, height=2).pack(pady=10)
         
         # Tombol Logout
-        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2, bg = "#de6262").pack(pady=10)
+        tk.Button(self.root, text="Logout", command=self.tampilan_selamat_datang, width=20, height=2).pack(pady=10)
     
     def tampilan_buat_daftar_belanja(self):
         """Tampilan untuk membuat daftar belanja baru"""
         # Hapus semua widget sebelumnya
         for widget in self.root.winfo_children():
             widget.destroy()
-            
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background baru.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
         
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image  
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Judul
+        tk.Label(self.root, text="Buat Daftar Belanja Baru", font=("Arial", 20)).pack(pady=20)
         
         # Set Anggaran
-        anggaran_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
-        anggaran_entry.pack(pady=(370,5))
+        tk.Label(self.root, text="Total Anggaran").pack()
+        anggaran_entry = tk.Entry(self.root, width=30)
+        anggaran_entry.pack(pady=5)
         
         # Judul Belanja
-        judul_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
-        judul_entry.pack(pady=(30,5))
+        tk.Label(self.root, text="Judul Belanja").pack()
+        judul_entry = tk.Entry(self.root, width=30)
+        judul_entry.pack(pady=5)
         
         # Tanggal Belanja
-        tanggal_entry = tk.Entry(self.root, width=40, bg = "#ffdcf7")
-        tanggal_entry.insert(0, datetime.now().strftime("%d-%m-%Y"))
-        tanggal_entry.pack(pady=(42,5))
+        tk.Label(self.root, text="Tanggal Belanja").pack()
+        tanggal_entry = tk.Entry(self.root, width=30)
+        tanggal_entry.insert(0, datetime.now().strftime("%Y-%m-%d"))
+        tanggal_entry.pack(pady=5)
         
         def lanjut_input_barang():
             try:
@@ -247,43 +198,32 @@ class AplikasiBelanjaKeluarga:
                 tanggal = tanggal_entry.get()
                 
                 if not judul:
-                    messagebox.showerror("Kesalahan", "Judul belanja harus diisi!")
+                    messagebox.showerror("Kesalahan", "Judul belanja harus diisi")
                     return
                 
                 self.tampilan_input_barang(anggaran, judul, tanggal)
             except ValueError:
-                messagebox.showerror("Kesalahan", "Anggaran harus berupa angka!")
+                messagebox.showerror("Kesalahan", "Anggaran harus berupa angka")
         
         # Tombol Lanjut
-        tk.Button(self.root, text="Lanjut", command=lanjut_input_barang, width= 15, bg = "#ffc5bb").pack(pady=10)
+        tk.Button(self.root, text="Lanjut", command=lanjut_input_barang).pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", width = 20, height= 2, command=self.tampilan_menu_utama, bg = "#de6262").pack(pady=(175,10), padx=(50,1300))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
     
     def tampilan_input_barang(self, anggaran, judul, tanggal):
         """Tampilan untuk menginput barang belanja"""
         # Hapus semua widget sebelumnya
         for widget in self.root.winfo_children():
             widget.destroy()
-            
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background daftar belanja.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
         
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image  
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Judul
+        tk.Label(self.root, text="Input Barang Belanja", font=("Arial", 20)).pack(pady=20)
         
         # Sisa Anggaran
         sisa_anggaran = anggaran
-        sisa_label = tk.Label(self.root, text=f"Sisa Anggaran: Rp {sisa_anggaran:,.2f}", font=("Times New Roman", 10))
-        sisa_label.pack(pady=(75,5))
+        sisa_label = tk.Label(self.root, text=f"Sisa Anggaran: Rp {sisa_anggaran:,.2f}")
+        sisa_label.pack(pady=5)
         
         # List Belanja
         list_belanja = []
@@ -297,16 +237,19 @@ class AplikasiBelanjaKeluarga:
         list_treeview.pack(side=tk.LEFT)
         
         # Kategori
-        kategori_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
-        kategori_entry.pack(pady=(40,5))
+        tk.Label(self.root, text="Kategori Barang").pack()
+        kategori_entry = tk.Entry(self.root, width=30)
+        kategori_entry.pack(pady=5)
         
         # Nama Barang
-        nama_barang_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
-        nama_barang_entry.pack(pady=(35,5))
+        tk.Label(self.root, text="Nama Barang").pack()
+        nama_barang_entry = tk.Entry(self.root, width=30)
+        nama_barang_entry.pack(pady=5)
         
         # Harga Barang
-        harga_barang_entry = tk.Entry(self.root, width=30, bg = "#ffe7e1")
-        harga_barang_entry.pack(pady=(38,5))
+        tk.Label(self.root, text="Harga Barang").pack()
+        harga_barang_entry = tk.Entry(self.root, width=30)
+        harga_barang_entry.pack(pady=5)
         
         def tambah_barang():
             nonlocal sisa_anggaran
@@ -379,54 +322,31 @@ class AplikasiBelanjaKeluarga:
             messagebox.showinfo("Berhasil", "Daftar belanja berhasil disimpan")
             self.tampilan_menu_utama()
         
-        # Frame untuk tombol
-        frame_tombol = tk.Frame(self.root)
-        frame_tombol.pack(pady=10)
-
-        # Frame untuk tombol Tambah dan Hapus Barang
-        frame_tombol_atas = tk.Frame(self.root)
-        frame_tombol_atas.pack(pady=10)
-
         # Tombol Tambah Barang
-        tk.Button(frame_tombol_atas, text="Tambah Barang", command=tambah_barang, width=20, height=2, bg="#ffdad0").pack(side="left", padx=10)
-
+        tk.Button(self.root, text="Tambah Barang", command=tambah_barang).pack(pady=5)
+        
         # Tombol Hapus Barang
-        tk.Button(frame_tombol_atas, text="Hapus Barang", command=hapus_barang, width=20, height=2, bg="#f7c7bb").pack(side="left", padx=10)
-
-        # Frame untuk tombol Cek Anggaran dan Simpan
-        frame_tombol_bawah = tk.Frame(self.root)
-        frame_tombol_bawah.pack(pady=10)
-
-        # Tombol Cek Anggaran
-        tk.Button(frame_tombol_bawah, text="Cek Anggaran", command=cek_status, width=20, height=2, bg="#e5b0a3").pack(side="left", padx=10)
-
+        tk.Button(self.root, text="Hapus Barang", command=hapus_barang).pack(pady=5)
+        
+        # Tombol Cek Status
+        tk.Button(self.root, text="Cek Status Anggaran", command=cek_status).pack(pady=5)
+        
         # Tombol Simpan
-        tk.Button(frame_tombol_bawah, text="Simpan", command=simpan_daftar, width=20, height=2, bg="#d7a193").pack(side="left", padx=10)
+        tk.Button(self.root, text="Simpan", command=simpan_daftar).pack(pady=5)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(35,10), padx=(50,1300))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
     
     def tampilan_daftar_belanja_lama(self):
         for widget in self.root.winfo_children():
              widget.destroy()
-             
-        # Load gambar JPG
-        image = Image.open(r"C:\Users\Lenovo\Desktop\tubes prokom\Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga\background lama.jpg")
-        image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
-        bg_image = ImageTk.PhotoImage(image)
         
-        # Label untuk background
-        bg_label = tk.Label(self.root, image=bg_image)
-        bg_label.image = bg_image  
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-        
-        # Buat frame utama di atas background
-        frame = tk.Frame(self.root, bg="#ffffff", bd=2)
-        frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Judul
+        tk.Label(self.root, text="Daftar Belanja Lama", font=("Arial", 20)).pack(pady=20)
         
         # Frame untuk daftar belanja
         list_frame = tk.Frame(self.root)
-        list_frame.pack(pady=(275,10))
+        list_frame.pack(pady=10)
         
         # Treeview untuk menampilkan daftar belanja
         list_treeview = ttk.Treeview(list_frame, columns=("Judul", "Tanggal"), show="headings")
@@ -454,17 +374,14 @@ class AplikasiBelanjaKeluarga:
             with open(os.path.join(self.shopping_lists_dir, file_name), 'r') as f:
                 daftar_belanja = json.load(f)
             
-            for widget in self.root.winfo_children():
-                widget.destroy()
-            
             detail_window = tk.Toplevel(self.root)
             detail_window.title(f"Detail Belanja - {daftar_belanja['judul']}")
-            detail_window.geometry("1960x1080")
+            detail_window.geometry("400x500")
             
-            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Times New Roman", 15, "bold")).pack(pady=(200,10))
-            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Times New Roman", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
-            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Times New Roman", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Judul: {daftar_belanja['judul']}", font=("Arial", 14)).pack(pady=5)
+            tk.Label(detail_window, text=f"Tanggal: {daftar_belanja['tanggal']}", font=("Arial", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Total Anggaran: Rp {daftar_belanja['total_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
+            tk.Label(detail_window, text=f"Sisa Anggaran: Rp {daftar_belanja['sisa_anggaran']:,.2f}", font=("Arial", 12)).pack(pady=5)
             
             detail_list_frame = tk.Frame(detail_window)
             detail_list_frame.pack(pady=10)
@@ -477,12 +394,7 @@ class AplikasiBelanjaKeluarga:
             
             for barang in daftar_belanja['list_belanja']:
                 detail_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {barang[2]:,.2f}"))
-            
-            # tombol "Kembali"
-            
-            kembali_button = tk.Button(detail_window, text="Kembali", command=detail_window.destroy)
-            kembali_button.pack(pady=10)
-    
+        
         def hapus_daftar():
             selected_item = list_treeview.selection()
             if not selected_item:
@@ -499,14 +411,15 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showinfo("Berhasil", "Daftar belanja berhasil dihapus")
         
         # Tombol Lihat Detail
-        tk.Button(self.root, text="Lihat Detail", command=lihat_detail, width = 20, height= 2, bg = "#b5e0f7").pack(pady=5)
+        tk.Button(self.root, text="Lihat Detail", command=lihat_detail).pack(pady=5)
         
         # Tombol Hapus Daftar
-        tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar, width= 20, height= 2, bg = "#91bad0").pack(pady=5)
+        tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar).pack(pady=5)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(90,10), padx=(50,1300))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama).pack(pady=5)
 
+        
 def main():
     root = tk.Tk()
     app = AplikasiBelanjaKeluarga(root)

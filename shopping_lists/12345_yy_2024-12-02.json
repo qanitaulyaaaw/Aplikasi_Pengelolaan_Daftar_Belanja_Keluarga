@@ -1,0 +1,19 @@
+{
+    "pengguna": "12345",
+    "judul": "yy",
+    "tanggal": "2024-12-02",
+    "total_anggaran": 10000000000.0,
+    "sisa_anggaran": 9999792000.0,
+    "list_belanja": [
+        [
+            "tahi",
+            "tahi bau",
+            200000.0
+        ],
+        [
+            "sapi",
+            "sapi limosin",
+            8000.0
+        ]
+    ]
+}
