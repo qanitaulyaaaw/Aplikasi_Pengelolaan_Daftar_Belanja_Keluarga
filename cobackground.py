@@ -8,7 +8,7 @@ from datetime import datetime
 class AplikasiBelanjaKeluarga:
     def __init__(self, root):
         self.root = root
-        self.root.title("FAMSHOP")
+        self.root.title("PlanIt")
         self.root.geometry("1960x1080")
         
         # Direktori untuk menyimpan data
@@ -58,9 +58,9 @@ class AplikasiBelanjaKeluarga:
         frame.place(relx=0.5, rely=0.5, anchor="center")
     
         # Tombol Login
-        tk.Button(self.root, text="Login", fg = "#a9475e", command=self.tampilan_login, width=30, height=3).pack(pady=(400,10))
+        tk.Button(self.root, text="Login", font = ("Times New Roman", 15), bg = "#006989", fg = "#f3f7ec", command=self.tampilan_login, width=20, height=2).pack(pady=(400,10))
         # Tombol Daftar
-        tk.Button(self.root, text="Daftar", fg = "#a9475e", command=self.tampilan_daftar, width=30, height=3).pack(pady=(50,130))
+        tk.Button(self.root, text="Daftar", font = ("Times New Roman", 15), bg = "#006989", fg = "#f3f7ec", command=self.tampilan_daftar, width=20, height=2).pack(pady=(50,130))
  
     def tampilan_login(self):
         """Tampilan login"""
@@ -102,10 +102,10 @@ class AplikasiBelanjaKeluarga:
                 messagebox.showerror("Login Gagal", "Username atau password salah")
         
         # Tombol Login
-        tk.Button(self.root, text="Login", command=proses_login, bg = "#b3f9ff", width=30, height=2).pack(pady=10)
+        tk.Button(self.root, text="Login", command=proses_login, bg = "#b3f9ff", width=30, height=2).pack(pady=(5,1))
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang, bg = "#f08080", width=10, height=2).pack(pady=(0,100), padx=(5,1000))
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang, bg = "#f08080", width=20, height=2).pack(pady=(100,10), padx=(50,1300))
     
     def tampilan_daftar(self):
         """Tampilan pendaftaran"""
@@ -173,7 +173,7 @@ class AplikasiBelanjaKeluarga:
         tk.Button(self.root, text="Daftar", command=proses_daftar, width=20, height= 2, bg = "#b3f9ff").pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang,  width=20, height= 2, bg = "#f08080").pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_selamat_datang,  width=20, height= 2, bg = "#f08080").pack(pady=(125,10), padx=(50,1300))
     
     def tampilan_menu_utama(self):
         """Tampilan menu utama setelah login"""
@@ -258,7 +258,7 @@ class AplikasiBelanjaKeluarga:
         tk.Button(self.root, text="Lanjut", command=lanjut_input_barang, width= 15, bg = "#ffc5bb").pack(pady=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, bg = "#de6262").pack(pady=5)
+        tk.Button(self.root, text="Kembali", width = 20, height= 2, command=self.tampilan_menu_utama, bg = "#de6262").pack(pady=(175,10), padx=(50,1300))
     
     def tampilan_input_barang(self, anggaran, judul, tanggal):
         """Tampilan untuk menginput barang belanja"""
@@ -379,20 +379,32 @@ class AplikasiBelanjaKeluarga:
             messagebox.showinfo("Berhasil", "Daftar belanja berhasil disimpan")
             self.tampilan_menu_utama()
         
+        # Frame untuk tombol
+        frame_tombol = tk.Frame(self.root)
+        frame_tombol.pack(pady=10)
+
+        # Frame untuk tombol Tambah dan Hapus Barang
+        frame_tombol_atas = tk.Frame(self.root)
+        frame_tombol_atas.pack(pady=10)
+
         # Tombol Tambah Barang
-        tk.Button(self.root, text="Tambah Barang", command=tambah_barang, width= 20, height= 2, bg = "#ffdad0").pack(pady=5)
-        
+        tk.Button(frame_tombol_atas, text="Tambah Barang", command=tambah_barang, width=20, height=2, bg="#ffdad0").pack(side="left", padx=10)
+
         # Tombol Hapus Barang
-        tk.Button(self.root, text="Hapus Barang", command=hapus_barang, width= 20, height= 2, bg = "#f7c7bb").pack(pady=5)
-        
-        # Tombol Cek Status
-        tk.Button(self.root, text="Cek Anggaran", command=cek_status, width= 20, height= 2, bg = "#e5b0a3").pack(pady=5)
-        
+        tk.Button(frame_tombol_atas, text="Hapus Barang", command=hapus_barang, width=20, height=2, bg="#f7c7bb").pack(side="left", padx=10)
+
+        # Frame untuk tombol Cek Anggaran dan Simpan
+        frame_tombol_bawah = tk.Frame(self.root)
+        frame_tombol_bawah.pack(pady=10)
+
+        # Tombol Cek Anggaran
+        tk.Button(frame_tombol_bawah, text="Cek Anggaran", command=cek_status, width=20, height=2, bg="#e5b0a3").pack(side="left", padx=10)
+
         # Tombol Simpan
-        tk.Button(self.root, text="Simpan", command=simpan_daftar, width= 20, height= 2, bg = "#d7a193").pack(pady=5)
+        tk.Button(frame_tombol_bawah, text="Simpan", command=simpan_daftar, width=20, height=2, bg="#d7a193").pack(side="left", padx=10)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(35,10), padx=(50,1300))
     
     def tampilan_daftar_belanja_lama(self):
         for widget in self.root.winfo_children():
@@ -499,7 +511,7 @@ class AplikasiBelanjaKeluarga:
         tk.Button(self.root, text="Hapus Daftar", command=hapus_daftar, width= 20, height= 2, bg = "#91bad0").pack(pady=5)
         
         # Tombol Kembali
-        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=5)
+        tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(90,10), padx=(50,1300))
 
         
 def main():
