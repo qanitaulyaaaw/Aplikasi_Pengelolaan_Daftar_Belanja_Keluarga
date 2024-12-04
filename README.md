@@ -11,4 +11,5 @@ Aplikasi pengelolaan daftar belanja ini dirancang untuk memberikan kemudahan kep
 Fitur-fitur program ini adalah menambah item belanja, menghapus item belanja yang tidak diperlukan, mengedit detail barang dengan mudah, mengecek sisa anggaran yang dimiliki, dan pencatatan riwayat belanja bulan-bulan sebelumnya.
 
 # Diagram Alir
-![Uploading Aplikasi Pengelolaan Belanja Keluarga Fix.drawio.png…]()
+![Aplikasi Pengelolaan Belanja Keluarga Fix drawio](https://github.com/user-attachments/assets/883766bf-1702-414f-9273-e05d12b0fd5d)
+
