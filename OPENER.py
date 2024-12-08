@@ -5,7 +5,7 @@ import json
 import os
 
 # Pastikan file AplikasiBelanja sudah terimport dengan benar
-from DAFTAR_BELANJA_BARU import AplikasiBelanja  # Impor program aplikasi belanja utama
+from DAFTAR_BELANJA_BARU import AplikasiBelanja 
 from HALAMAN_DAFTAR import AplikasiDaftar
 
 class AplikasiBelanjaKeluarga:
@@ -100,7 +100,6 @@ class AplikasiBelanjaKeluarga:
             if username in self.users and self.users[username]['password'] == password:
                 self.pengguna_saat_ini = username
                 
-                # Panggil fungsi untuk tampilan menu utama belanja, langsung dalam jendela yang sama
                 self.tampilan_menu_utama()
             else:
                 messagebox.showerror("Login Gagal", "Username atau password salah")
@@ -118,7 +117,6 @@ class AplikasiBelanjaKeluarga:
 
         messagebox.showinfo("Selamat datang", "Selamat datang di aplikasi utama!")
 
-        # Memanggil kelas AplikasiBelanja untuk menampilkan tampilan belanja
         app = AplikasiBelanja(self.root, self.pengguna_saat_ini, self.shopping_lists_dir)
 
     def tampilan_daftar(self):
@@ -126,11 +124,10 @@ class AplikasiBelanjaKeluarga:
         for widget in self.root.winfo_children():
             widget.destroy()
 
-        # Panggil tampilan pendaftaran dari AplikasiDaftar
         AplikasiDaftar(self.root, self)
 
 # Inisialisasi dan menjalankan aplikasi
 if __name__ == "__main__":
     root = tk.Tk()
     app = AplikasiBelanjaKeluarga(root)
-    root.mainloop()  # Tambahkan ini untuk menjalankan aplikasi Tkinter
+    root.mainloop()  
