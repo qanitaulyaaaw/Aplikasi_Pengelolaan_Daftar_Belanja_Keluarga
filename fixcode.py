@@ -375,7 +375,7 @@ class AplikasiBelanjaKeluarga:
         
         def simpan_daftar():
             # Simpan daftar belanja ke file JSON
-            nama_file = f"{self.shopping_lists_dir}/{self.pengguna_saat_ini}{judul}{tanggal}.json"
+            nama_file = f"{self.shopping_lists_dir}/{self.pengguna_saat_ini}_{judul}_{tanggal}.json"
             daftar_belanja = {
                 'pengguna': self.pengguna_saat_ini,
                 'judul': judul,

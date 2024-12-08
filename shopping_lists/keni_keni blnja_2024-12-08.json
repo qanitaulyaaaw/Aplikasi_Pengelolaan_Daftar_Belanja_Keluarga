@@ -1,0 +1,14 @@
+{
+    "pengguna": "keni",
+    "judul": "keni blnja",
+    "tanggal": "2024-12-08",
+    "total_anggaran": 90000.0,
+    "sisa_anggaran": 85000.0,
+    "list_belanja": [
+        [
+            "pakaian",
+            "baju",
+            5000.0
+        ]
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "pengguna": "kencot",
+    "judul": "apakek",
+    "tanggal": "08-12-2024",
+    "total_anggaran": 100000.0,
+    "sisa_anggaran": 89500.0,
+    "list_belanja": [
+        [
+            "makanan",
+            "permen",
+            500.0
+        ],
+        [
+            "makanan",
+            "milkita",
+            10000.0
+        ]
+    ]
+}
