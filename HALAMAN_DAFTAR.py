@@ -7,12 +7,12 @@ import os
 class AplikasiDaftar:
     def __init__(self, root, app_login):
         self.root = root
-        self.app_login = app_login  # Mengakses aplikasi login
+        self.app_login = app_login  
         self.root.title("Pendaftaran")
-        self.root.geometry("1960x1080")  # Ukuran jendela
-        self.users = app_login.users  # Menggunakan data pengguna yang ada dari aplikasi login
+        self.root.geometry("1960x1080")  
+        self.users = app_login.users  
 
-        # Gambar latar belakang
+
         self.tampilan_daftar()
 
     def tampilan_daftar(self):
@@ -22,17 +22,16 @@ class AplikasiDaftar:
 
         daftar_image_path = "background daftar.jpg"
 
-        # Cek apakah gambar ada
+
         if os.path.exists(daftar_image_path):
             image = Image.open(daftar_image_path)
-            image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)  # Resize image to window size
+            image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)  
             bg_image = ImageTk.PhotoImage(image)
 
-            # Label untuk background
+            
             bg_label = tk.Label(self.root, image=bg_image)
-            bg_label.image = bg_image  # Menyimpan referensi gambar agar tidak hilang
-            bg_label.place(x=0, y=0, relwidth=1, relheight=1)  # Tempatkan background di seluruh jendela
-
+            bg_label.image = bg_image  
+            bg_label.place(x=0, y=0, relwidth=1, relheight=1)  
         else:
             messagebox.showerror("Error", "File gambar tidak ditemukan!")
 
@@ -78,7 +77,7 @@ class AplikasiDaftar:
                 'email': email,
                 'password': password
             }
-            self.app_login.save_users()  # Simpan perubahan ke file
+            self.app_login.save_users()  
 
             # Informasi pendaftaran berhasil
             messagebox.showinfo("Berhasil", "Akun berhasil dibuat! Silakan login.")
