@@ -7,12 +7,12 @@ import os
 class AplikasiDaftar:
     def __init__(self, root, app_login):
         self.root = root
-        self.app_login = app_login  # Mengakses aplikasi login
+        self.app_login = app_login  
         self.root.title("Pendaftaran")
-        self.root.geometry("1960x1080")  # Ukuran jendela
-        self.users = app_login.users  # Menggunakan data pengguna yang ada dari aplikasi login
+        self.root.geometry("1960x1080")  
+        self.users = app_login.users  
 
-        # Gambar latar belakang
+    
         self.tampilan_daftar()
 
     def tampilan_daftar(self):
@@ -22,37 +22,31 @@ class AplikasiDaftar:
 
         daftar_image_path = "background daftar.jpg"
 
-        # Cek apakah gambar ada
         if os.path.exists(daftar_image_path):
             image = Image.open(daftar_image_path)
-            image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)  # Resize image to window size
+            image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS) 
             bg_image = ImageTk.PhotoImage(image)
 
-            # Label untuk background
             bg_label = tk.Label(self.root, image=bg_image)
-            bg_label.image = bg_image  # Menyimpan referensi gambar agar tidak hilang
-            bg_label.place(x=0, y=0, relwidth=1, relheight=1)  # Tempatkan background di seluruh jendela
+            bg_label.image = bg_image  
+            bg_label.place(x=0, y=0, relwidth=1, relheight=1)  
 
         else:
             messagebox.showerror("Error", "File gambar tidak ditemukan!")
 
-        # Frame untuk form input
         frame = tk.Frame(self.root, bg="#ffffff", bd=2)
         frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        # Nama
+    
         nama_entry = tk.Entry(self.root, width=50, bg="#ffc5bb")
         nama_entry.pack(pady=(295, 10))
 
-        # Username
         username_entry = tk.Entry(self.root, width=50, bg="#ffc5bb")
         username_entry.pack(pady=(35, 10))
 
-        # Email
         email_entry = tk.Entry(self.root, width=50, bg="#ffc5bb")
         email_entry.pack(pady=(40, 15))
 
-        # Password
         password_entry = tk.Entry(self.root, show="*", width=50, bg="#ffc5bb")
         password_entry.pack(pady=(35, 15))
 
@@ -62,34 +56,27 @@ class AplikasiDaftar:
             email = email_entry.get()
             password = password_entry.get()
 
-            # Validasi input
             if not (nama and username and email and password):
                 messagebox.showerror("Kesalahan", "Semua kolom harus diisi!")
                 return
 
-            # Cek jika username sudah ada
             if username in self.users:
                 messagebox.showerror("Kesalahan", "Username sudah ada!")
                 return
 
-            # Simpan data pengguna baru
             self.users[username] = {
                 'nama': nama,
                 'email': email,
                 'password': password
             }
-            self.app_login.save_users()  # Simpan perubahan ke file
-
-            # Informasi pendaftaran berhasil
+            self.app_login.save_users()  
+          
             messagebox.showinfo("Berhasil", "Akun berhasil dibuat! Silakan login.")
 
-            # Kembali ke tampilan login
             self.app_login.tampilan_login()
 
-        # Tombol Daftar
         tk.Button(self.root, text="Daftar", command=proses_daftar, width=20, height=2, bg="#b3f9ff").pack(pady=10)
 
-        # Tombol Kembali
         def kembali_ke_login():
             """Fungsi untuk kembali ke tampilan login"""
             self.app_login.tampilan_login()
