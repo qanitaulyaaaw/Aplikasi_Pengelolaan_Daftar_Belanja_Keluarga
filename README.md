@@ -10,7 +10,7 @@ Aplikasi pengelolaan daftar belanja ini dirancang untuk memberikan kemudahan kep
 # Fitur Program
 Fitur-fitur program ini adalah menambah item belanja, menghapus item belanja yang tidak diperlukan, mengedit detail barang dengan mudah, mengecek sisa anggaran yang dimiliki, dan pencatatan riwayat belanja bulan-bulan sebelumnya.
 
-# Library yang digunakan
+# Library
 - tkinter
 - pillow
 - datetime
