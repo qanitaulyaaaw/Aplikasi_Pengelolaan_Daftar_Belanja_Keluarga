@@ -1,4 +1,4 @@
-# Aplikasi_Pengelolaan_Daftar_Belanja_Keluarga
+# PlanIt Aplikasi Pengelolaan Daftar Belanja Keluarga
 # Kelas A, Kelompok 2, Anggota Team : 
 1. (I0324015, Leirisa Yajna Kirana Fagan, leirisayajnakirana) 
 2. (I0324024, Qanita Ulya, qanitaulyaaw) 
