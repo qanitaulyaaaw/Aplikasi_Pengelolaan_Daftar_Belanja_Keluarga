@@ -15,6 +15,7 @@ class AplikasiBelanja:
         self.root.geometry("1960x1080") 
         self.tampilan_menu_utama()
 
+
     def tampilan_menu_utama(self):
         """Tampilan menu utama setelah login"""
         # Hapus semua widget sebelumnya
@@ -281,6 +282,40 @@ class AplikasiBelanja:
         # Tombol Kembali
         tk.Button(self.root, text="Kembali", command=self.tampilan_menu_utama, width= 20, height= 2, bg = "#de6262").pack(pady=(35,10), padx=(50,1300))
     
+    def update_sisa_anggaran(self, daftar_belanja):
+        # Hitung ulang total belanja dan sisa anggaran
+        total_belanja = sum(item[2] for item in daftar_belanja['list_belanja'])
+        sisa_anggaran = daftar_belanja['total_anggaran'] - total_belanja
+
+        if sisa_anggaran < 0:
+            # Tampilkan peringatan dan cegah pengguna melanjutkan
+            messagebox.showerror("Anggaran Melebihi Batas", "Anggaran tidak cukup! Harap kurangi jumlah belanja untuk melanjutkan.")
+            return False
+
+        # Format ulang sisa anggaran jika positif
+        sisa_anggaran_formatted = f"Rp {sisa_anggaran:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
+
+        # Periksa apakah self.frame ada, jika tidak buat frame baru
+        if not hasattr(self, 'frame') or not self.frame.winfo_exists():
+            self.frame = tk.Frame(self.root, bg="#ffffff", bd=2)
+            self.frame.place(relx=0.5, rely=0.5, anchor="center")
+
+        # Periksa apakah label "Sisa Anggaran" sudah ada, jika ada update, jika tidak buat baru
+        for widget in self.frame.winfo_children():
+            if isinstance(widget, tk.Label) and "Sisa Anggaran" in widget.cget("text"):
+                widget.config(text=f"Sisa Anggaran: {sisa_anggaran_formatted}")
+                return True
+
+        # Jika label tidak ditemukan, buat label baru
+        self.label_sisa_anggaran = tk.Label(
+            self.frame,
+            text=f"Sisa Anggaran: {sisa_anggaran_formatted}",
+            font=("Times New Roman", 12)
+        )
+        self.label_sisa_anggaran.pack(pady=5)
+        return True
+
+
     def tampilan_daftar_belanja_lama(self):
         for widget in self.root.winfo_children():
              widget.destroy()
@@ -326,6 +361,7 @@ class AplikasiBelanja:
                                 judul = daftar.get('judul', 'Tidak Ada Judul')
                                 tanggal = daftar.get('tanggal', 'Tidak Ada Tanggal')
                                 list_treeview.insert("", "end", values=(judul, tanggal), tags=(judul,))
+
                 except json.JSONDecodeError:
                     messagebox.showerror("Kesalahan", "File data belanja rusak!")
         
@@ -355,10 +391,10 @@ class AplikasiBelanja:
             except json.JSONDecodeError:
                 messagebox.showerror("Kesalahan", "File JSON tidak valid atau rusak")
                 return
-
+            
             for widget in self.root.winfo_children():
                 widget.destroy()
-    
+            
     # Jendela detail
             detail_window = tk.Frame(self.root)
             detail_window.pack(fill="both", expand=True)
@@ -376,7 +412,6 @@ class AplikasiBelanja:
             bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     
     
-
     # Frame utama
             frame = tk.Frame(detail_window, bg="#ffffff", bd=2)
             frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -387,6 +422,10 @@ class AplikasiBelanja:
             tk.Label(frame, text=f"Total Anggaran: Rp {total_anggaran_formatted}", font=("Times New Roman", 12)).pack(pady=5)
             sisa_anggaran_formatted = f"{daftar_belanja['sisa_anggaran']:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
             tk.Label(frame, text=f"Sisa Anggaran: Rp {sisa_anggaran_formatted}", font=("Times New Roman", 12)).pack(pady=5)
+
+            # Memanggil update_sisa_anggaran setelah memilih detail
+            self.frame = frame  # Set self.frame untuk digunakan oleh update_sisa_anggaran
+            self.update_sisa_anggaran(daftar_belanja)
     
     # Frame untuk daftar barang
             detail_list_frame = tk.Frame(frame)
@@ -402,10 +441,263 @@ class AplikasiBelanja:
                 harga_formatted = f"{barang[2]:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
                 detail_treeview.insert("", "end", values=(barang[0], barang[1], f"Rp {harga_formatted}"))
     
-    # Tombol "Kembali"
+    
+            def edit_daftar():
+                selected_item = detail_treeview.selection()
+                if not selected_item:
+                    messagebox.showerror("Kesalahan", "Pilih item yang akan diedit")
+                    return
+
+                # Ambil data dari item yang dipilih
+                values = detail_treeview.item(selected_item[0], "values")
+                kategori, nama_barang, harga = values
+
+                # Sembunyikan detail_window
+                detail_window.pack_forget()
+
+                # Halaman edit daftar
+                edit_frame = tk.Frame(self.root, bg="#ffffff")
+                edit_frame.pack(fill="both", expand=True)
+
+                edit_image_path = "background edit item.jpg"
+
+                # Load gambar JPG untuk background
+                image = Image.open(edit_image_path)
+                image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
+                bg_image = ImageTk.PhotoImage(image)
+
+                # Tambahkan margin atas dengan frame kosong
+                tk.Frame(edit_frame, height=180, bg="#ffffff").pack()
+
+                # Label untuk background
+                bg_label = tk.Label(edit_frame, image=bg_image)
+                bg_label.image = bg_image  
+                bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+                tk.Label(edit_frame, text="Kategori", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                kategori_entry = tk.Entry(edit_frame, width=45, bg="#ffdcf7")
+                kategori_entry.insert(0, kategori)
+                kategori_entry.pack(pady=5, padx=10, ipady=3)
+
+                tk.Label(edit_frame, text="Nama Barang", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                nama_barang_entry = tk.Entry(edit_frame, width=45, bg="#ffdcf7")
+                nama_barang_entry.insert(0, nama_barang)
+                nama_barang_entry.pack(pady=5, padx=10, ipady=3)
+
+                tk.Label(edit_frame, text="Harga", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                harga_entry = tk.Entry(edit_frame, width=45, bg="#ffdcf7")
+                harga_entry.insert(0, harga.replace("Rp ", "").replace(".", ""))
+                harga_entry.pack(pady=5, padx=10, ipady=3)
+
+                def simpan_perubahan():
+                    new_kategori = kategori_entry.get()
+                    new_nama_barang = nama_barang_entry.get()
+                    try:
+                        # Ganti koma dengan titik
+                        harga_input = harga_entry.get().replace(",", ".")
+                        new_harga = float(harga_input)  # Konversi ke float
+                    except ValueError:
+                        messagebox.showerror("Kesalahan", "Harga harus berupa angka valid")
+                        return
+
+                    try:
+                        # Hitung ulang total belanja
+                        total_belanja_lama = sum(item[2] for item in daftar_belanja['list_belanja'])
+                        harga_lama_float = float(harga.replace("Rp ", "").replace(".", "").replace(",", "."))
+                        total_belanja_baru = total_belanja_lama - harga_lama_float + new_harga
+
+                        # Periksa apakah melebihi anggaran
+                        if total_belanja_baru > daftar_belanja['total_anggaran']:
+                            messagebox.showerror("Anggaran Melebihi Batas", "Anggaran tidak cukup! Harap kurangi jumlah belanja untuk melanjutkan.")
+                            return
+
+                        # Update Treeview
+                        harga_formatted = f"Rp {new_harga:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
+                        detail_treeview.item(selected_item[0], values=(new_kategori, new_nama_barang, harga_formatted))
+
+                        # Update JSON
+                        for barang in daftar_belanja['list_belanja']:
+                            if (
+                                barang[0] == kategori and 
+                                barang[1] == nama_barang and 
+                                barang[2] == float(harga.replace("Rp ", "").replace(".", "").replace(",", "."))
+                            ):
+                                barang[0] = new_kategori
+                                barang[1] = new_nama_barang
+                                barang[2] = new_harga
+                                break
+
+                        # Simpan kembali ke file JSON
+                        with open(nama_file, 'w') as f:
+                            json.dump(data, f, indent=4)
+
+                        # Hitung ulang sisa anggaran
+                        sisa_anggaran = daftar_belanja['total_anggaran'] - total_belanja_baru
+
+                        # Format ulang sisa anggaran
+                        sisa_anggaran_formatted = f"Rp {sisa_anggaran:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
+                        # Update label Sisa Anggaran
+                        for widget in frame.winfo_children():
+                            if isinstance(widget, tk.Label) and "Sisa Anggaran" in widget.cget("text"):
+                                widget.config(text=f"Sisa Anggaran: {sisa_anggaran_formatted}")
+
+                        messagebox.showinfo("Berhasil", "Data berhasil diubah")
+
+                        # Kembali ke detail_window
+                        edit_frame.pack_forget()
+                        detail_window.pack(fill="both", expand=True)
+
+                    except FileNotFoundError:
+                        messagebox.showerror("Kesalahan", "File data belanja tidak ditemukan")
+                    except json.JSONDecodeError:
+                        messagebox.showerror("Kesalahan", "File JSON tidak valid atau rusak")                
+
+
+                tk.Button(edit_frame, text="Simpan", command=simpan_perubahan, width=20, height=2, bg="#82ccdd", fg="black").pack(pady=20)
+
+                
+            # Tombol untuk Edit Daftar
+            tk.Button(frame, text="Edit Item", command=edit_daftar, width=20, height=2, bg="#91bad0").pack(side="left", padx=5, pady=5)
+
+            # Tombol "Kembali"
             kembali_button = tk.Button(detail_window, text="Kembali", command=self.tampilan_daftar_belanja_lama)
             kembali_button.pack(pady=10)
 
+            # Fungsi untuk Tambah Item
+            def tambah_item():
+                for widget in self.root.winfo_children():
+                    widget.destroy()
+
+                # Halaman tambah item
+                tambah_frame = tk.Frame(self.root, bg="#ffffff")
+                tambah_frame.pack(fill="both", expand=True)
+
+                tambah_image_path = "background tambah item.jpg"
+
+                # Load gambar JPG untuk background
+                image = Image.open(tambah_image_path)
+                image = image.resize((self.root.winfo_width(), self.root.winfo_height()), Image.LANCZOS)
+                bg_image = ImageTk.PhotoImage(image)
+
+                # Label untuk background
+                bg_label = tk.Label(tambah_frame, image=bg_image)
+                bg_label.image = bg_image  
+                bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+                # Tambahkan margin atas dengan frame kosong
+                tk.Frame(tambah_frame, height=180, bg="#ffffff").pack()
+
+                tk.Label(tambah_frame, text="Kategori", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                kategori_entry = tk.Entry(tambah_frame, width=45, bg="#ffdcf7")
+                kategori_entry.pack(pady=5, padx=10, ipady=3)
+
+                tk.Label(tambah_frame, text="Nama Barang", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                nama_barang_entry = tk.Entry(tambah_frame, width=45, bg="#ffdcf7")
+                nama_barang_entry.pack(pady=5, padx=10, ipady=3)
+
+                tk.Label(tambah_frame, text="Harga", bg="#ffffff", font=("Arial", 14)).pack(pady=5)
+                harga_entry = tk.Entry(tambah_frame, width=45, bg="#ffdcf7")
+                harga_entry.pack(pady=5, padx=10, ipady=3)
+
+                def simpan_item_baru():
+                    new_kategori = kategori_entry.get()
+                    new_nama_barang = nama_barang_entry.get()
+                    try:
+                        new_harga = float(harga_entry.get().replace(",", "."))
+                    except ValueError:
+                        messagebox.showerror("Kesalahan", "Harga harus berupa angka valid")
+                        return
+
+                    if not new_kategori or not new_nama_barang or not new_harga:
+                        messagebox.showerror("Kesalahan", "Semua kolom harus diisi!")
+                        return
+
+                    # Tambahkan item baru ke daftar belanja
+                    daftar_belanja['list_belanja'].append([new_kategori, new_nama_barang, new_harga])
+
+                    try:
+                        # Validasi anggaran sebelum menyimpan
+                        if not self.update_sisa_anggaran(daftar_belanja):
+                            # Jika anggaran tidak cukup, hapus item yang baru ditambahkan
+                            daftar_belanja['list_belanja'].pop()
+                            return
+
+                        # Simpan kembali ke file JSON
+                        with open(nama_file, 'w') as f:
+                            json.dump(data, f, indent=4)
+
+                        messagebox.showinfo("Berhasil", "Item baru berhasil ditambahkan!")
+
+                        # Hancurkan halaman tambah item
+                        tambah_frame.pack_forget()
+
+                        # Pastikan detail_window dibangun ulang
+                        self.tampilan_daftar_belanja_lama()  # Menggunakan fungsi ini untuk kembali ke tampilan detail
+
+                    except FileNotFoundError:
+                        messagebox.showerror("Kesalahan", "File data belanja tidak ditemukan")
+                    except json.JSONDecodeError:
+                        messagebox.showerror("Kesalahan", "File JSON tidak valid atau rusak")
+
+                tk.Button(tambah_frame, text="Simpan", command=simpan_item_baru, width=20, height=2, bg="#82ccdd", fg="black").pack(pady=20)
+
+                # Tombol "Kembali"
+                tk.Button(tambah_frame, text="Kembali", command=self.tampilan_daftar_belanja_lama, width=20, height=2, bg="#de6262").pack(pady=10)
+
+            # Tombol untuk Tambah Item
+            tk.Button(frame, text="Tambah Item", command=tambah_item, width=20, height=2, bg="#82ccdd").pack(side="left", padx=5, pady=5)
+
+            
+            # Fungsi untuk Hapus Item
+            def hapus_item():
+                selected_item = detail_treeview.selection()
+                if not selected_item:
+                    messagebox.showerror("Kesalahan", "Pilih item yang akan dihapus")
+                    return
+
+                # Ambil data dari item yang dipilih
+                values = detail_treeview.item(selected_item[0], "values")
+                kategori, nama_barang, harga = values
+
+                # Konfirmasi penghapusan
+                confirm = messagebox.askyesno("Konfirmasi", f"Apakah Anda yakin ingin menghapus item '{nama_barang}'?")
+                if not confirm:
+                    return
+
+                try:
+                    # Konversi harga dari tampilan ke tipe float
+                    harga_float = float(harga.replace("Rp ", "").replace(".", "").replace(",", "."))
+
+                    # Cari dan hapus item dari data JSON
+                    for barang in daftar_belanja['list_belanja']:
+                        if (
+                            barang[0] == kategori
+                            and barang[1] == nama_barang
+                            and barang[2] == harga_float
+                        ):
+                            daftar_belanja['list_belanja'].remove(barang)
+                            break
+
+                    # Simpan kembali ke file JSON
+                    with open(nama_file, 'w') as f:
+                        json.dump(data, f, indent=4)
+
+                    # Hapus item dari Treeview
+                    detail_treeview.delete(selected_item[0])
+
+                    self.update_sisa_anggaran(daftar_belanja)
+
+                    messagebox.showinfo("Berhasil", f"Item '{nama_barang}' berhasil dihapus")
+
+                except FileNotFoundError:
+                    messagebox.showerror("Kesalahan", "File data belanja tidak ditemukan")
+                except json.JSONDecodeError:
+                    messagebox.showerror("Kesalahan", "File JSON tidak valid atau rusak")
+
+
+            # Tombol untuk Hapus Item
+            tk.Button(frame, text="Hapus Item", command=hapus_item, width=12, height=2, bg="#e74c3c").pack(side="right", padx=5,pady=5)
+        
         def hapus_daftar():
             selected_item = list_treeview.selection()
             if not selected_item:
