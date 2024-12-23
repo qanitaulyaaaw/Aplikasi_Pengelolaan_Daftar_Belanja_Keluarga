@@ -1,0 +1,272 @@
+[
+    {
+        "pengguna": "1",
+        "judul": "belanja bulanan",
+        "tanggal": "08-12-2024",
+        "total_anggaran": 100000.0,
+        "sisa_anggaran": 81000.0,
+        "list_belanja": [
+            [
+                "alat tulis",
+                "pulpen",
+                10000.0
+            ],
+            [
+                "alat tulis",
+                "penggaris",
+                9000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "Kirana",
+        "judul": "Belanja Bulan Desember",
+        "tanggal": "11-12-2024",
+        "total_anggaran": 200000.0,
+        "sisa_anggaran": 13000.0,
+        "list_belanja": [
+            [
+                "Buah",
+                "Apel",
+                15000.0
+            ],
+            [
+                "Buah",
+                "Jeruk",
+                13000.0
+            ],
+            [
+                "Sayur",
+                "Kangkung",
+                5000.0
+            ],
+            [
+                "Makanan",
+                "Roti",
+                10000.0
+            ],
+            [
+                "Makanan",
+                "Ayam",
+                20000.0
+            ],
+            [
+                "Makanan",
+                "Beras",
+                30000.0
+            ],
+            [
+                "Makanan",
+                "Mie Instan",
+                9000.0
+            ],
+            [
+                "Perlengkapan Mandi",
+                "Sabun Mandi",
+                5000.0
+            ],
+            [
+                "Perlengkapan Mandi",
+                "Shampoo",
+                50000.0
+            ],
+            [
+                "Perlengkapan Masak",
+                "Minyak Goreng",
+                15000.0
+            ],
+            [
+                "Perlengkapan Masak",
+                "Garam",
+                10000.0
+            ],
+            [
+                "Perlengkapan Masak",
+                "Lada",
+                5000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "Kirana",
+        "judul": "Belanja Bulan November",
+        "tanggal": "25-11-2024",
+        "total_anggaran": 300000.0,
+        "sisa_anggaran": 114000.0,
+        "list_belanja": [
+            [
+                "Sayur",
+                "Bayam",
+                5000.0
+            ],
+            [
+                "Sayur",
+                "Jagung",
+                3000.0
+            ],
+            [
+                "Sayur",
+                "Pokcoy",
+                5000.0
+            ],
+            [
+                "Makanan",
+                "Kerupuk Udang",
+                10000.0
+            ],
+            [
+                "Makanan",
+                "Nugget",
+                25000.0
+            ],
+            [
+                "Makanan",
+                "Sosis",
+                30000.0
+            ],
+            [
+                "Makanan",
+                "Gula Pasir",
+                20000.0
+            ],
+            [
+                "Makanan",
+                "Beras",
+                50000.0
+            ],
+            [
+                "Titipan Kakak",
+                "Snack",
+                20000.0
+            ],
+            [
+                "Titipan Adek",
+                "Lemonile",
+                6000.0
+            ],
+            [
+                "Alat tulis adek",
+                "pensil",
+                2000.0
+            ],
+            [
+                "Alat tulis adek",
+                "pulpen",
+                10000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "Kirana",
+        "judul": "Belanja Lebaran",
+        "tanggal": "11-04-2024",
+        "total_anggaran": 400000.0,
+        "sisa_anggaran": 5000.0,
+        "list_belanja": [
+            [
+                "Baju Kakak",
+                "Gamis Pink",
+                75000.0
+            ],
+            [
+                "Baju Kakak",
+                "Pashmina Silk",
+                40000.0
+            ],
+            [
+                "Baju Ayah",
+                "Sarung Ayah",
+                80000.0
+            ],
+            [
+                "Baju Ibu",
+                "Gamis",
+                95000.0
+            ],
+            [
+                "Baju Adek",
+                "Outer Biru",
+                65000.0
+            ],
+            [
+                "Makanan",
+                "Daging Sapi",
+                40000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "Kirana",
+        "judul": "Belanja Natal",
+        "tanggal": "18-12-2024",
+        "total_anggaran": 80000.0,
+        "sisa_anggaran": 35000.0,
+        "list_belanja": [
+            [
+                "Pakaian",
+                "Baju Natal",
+                40000.0
+            ],
+            [
+                "Food",
+                "Cake",
+                5000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "Kirana",
+        "judul": "Makan Malam",
+        "tanggal": "18-12-2024",
+        "total_anggaran": 20000.0,
+        "sisa_anggaran": 20000.0,
+        "list_belanja": []
+    },
+    {
+        "pengguna": "kirana123",
+        "judul": "kencot",
+        "tanggal": "18-12-2024",
+        "total_anggaran": 200000.0,
+        "sisa_anggaran": 198000.0,
+        "list_belanja": [
+            [
+                "food",
+                "cake",
+                2000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "ray",
+        "judul": "food",
+        "tanggal": "22-12-2024",
+        "total_anggaran": 400000.0,
+        "sisa_anggaran": 370000.0,
+        "list_belanja": [
+            [
+                "ara",
+                "ara",
+                350000.0
+            ]
+        ]
+    },
+    {
+        "pengguna": "pare",
+        "judul": "AYAH",
+        "tanggal": "22-12-2024",
+        "total_anggaran": 500000.0,
+        "sisa_anggaran": 450000.0,
+        "list_belanja": [
+            [
+                "padang",
+                "padang",
+                20000.0
+            ],
+            [
+                "ram",
+                "ram",
+                60000.0
+            ]
+        ]
+    }
+]
