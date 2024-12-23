@@ -46,7 +46,7 @@ class AplikasiBelanjaKeluarga:
     def tampilan_selamat_datang(self):
         """Tampilan selamat datang"""
         for widget in self.root.winfo_children():
-            widget.destroy()
+            widget.destroy() 
 
         welcome_image_path = "background welcome.jpg"
 
@@ -117,7 +117,7 @@ class AplikasiBelanjaKeluarga:
 
         messagebox.showinfo("Selamat datang", "Selamat datang di aplikasi utama!")
 
-        app = AplikasiBelanja(self.root, self.pengguna_saat_ini, self.shopping_lists_dir)
+        app = AplikasiBelanja(self.root, self.pengguna_saat_ini, self.shopping_lists_dir,self)
 
     def tampilan_daftar(self):
         """Menampilkan tampilan pendaftaran tanpa jendela baru"""
